@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Checkout · KlientBoost</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#F4F5F9}
+a{color:#2F4BB8}a:hover{color:#0F1B3D}
+input[type=checkbox]{accent-color:#2F4BB8;width:20px;height:20px;margin:0}
+input:focus,select:focus,button:focus-visible{outline:3px solid #FFB547;outline-offset:1px}
+</style>
+</helmet>
+<div style="font-family: 'Plus Jakarta Sans', system-ui, sans-serif; color: #0B1430; background: #F4F5F9; min-height: 100vh">
+
+<div style="position: sticky; top: 0; z-index: 10"><dc-import name="Nav" hint-size="100%,76px"></dc-import></div>
+
+<section style="max-width: 1240px; margin: 0 auto; padding: 56px 24px 96px">
+<h1 style="margin: 0; font-family: 'Sora', sans-serif; font-weight: 800; font-size: clamp(34px, 4.4vw, 52px); letter-spacing: -0.04em; line-height: 1.06">Let's choose your plan.</h1>
+<p style="margin: 12px 0 0; font-size: 17px; color: #4A5470">Three quick steps: pick a plan, add your details, then pay securely.</p>
+
+<div style="margin-top: 40px; display: flex; flex-wrap: wrap; gap: 32px; align-items: flex-start">
+
+<!-- LEFT -->
+<div style="flex: 999 1 560px; min-width: 0; display: flex; flex-direction: column; gap: 24px">
+
+<!-- 1. plan -->
+<div style="background: #FFFFFF; border: 1px solid #DCDFEA; border-radius: 24px; padding: 30px">
+<h2 style="margin: 0; font-size: 20px; font-weight: 800; display: flex; align-items: center; gap: 12px"><span style="width: 32px; height: 32px; border-radius: 10px; background: #0F1B3D; color: #FFB547; font-family: 'Sora', sans-serif; font-size: 15px; display: flex; align-items: center; justify-content: center">1</span>Choose your plan</h2>
+<div role="group" aria-label="Plan" style="margin-top: 20px; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px">
+<sc-for list="{{plans}}" as="p" hint-placeholder-count="4">
+<sc-if value="{{p.selected}}" hint-placeholder-val="{{false}}">
+<button type="button" aria-pressed="true" onClick="{{p.pick}}" style="font: inherit; text-align: left; padding: 18px; border-radius: 16px; border: 2.5px solid #2F4BB8; background: #EEF1FA; color: #0B1430; cursor: pointer; display: flex; flex-direction: column; gap: 4px">
+<span style="display: flex; justify-content: space-between; gap: 8px; align-items: center; width: 100%"><span style="font-weight: 800; font-size: 17px">{{p.name}}</span><svg width="22" height="22" viewBox="0 0 24 24" fill="#2F4BB8" aria-hidden="true"><circle cx="12" cy="12" r="11"></circle><path d="M7 12.5l3.2 3L17 9" fill="none" stroke="#FFFFFF" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>
+<span style="font-family: 'Sora', sans-serif; font-weight: 800; font-size: 24px; letter-spacing: -0.03em">{{p.priceLabel}}</span>
+<span style="font-size: 14px; color: #4A5470">{{p.summary}}</span>
+<span style="font-size: 13px; font-weight: 700; color: #2F4BB8">{{p.tag}}</span>
+</button>
+</sc-if>
+<sc-if value="{{p.unselected}}" hint-placeholder-val="{{true}}">
+<button type="button" aria-pressed="false" onClick="{{p.pick}}" style="font: inherit; text-align: left; padding: 18px; border-radius: 16px; border: 2px solid #DCDFEA; background: #FFFFFF; color: #0B1430; cursor: pointer; display: flex; flex-direction: column; gap: 4px">
+<span style="display: flex; justify-content: space-between; gap: 8px; align-items: center; width: 100%"><span style="font-weight: 800; font-size: 17px">{{p.name}}</span><span aria-hidden="true" style="width: 18px; height: 18px; border-radius: 50%; border: 2px solid #C5CADB"></span></span>
+<span style="font-family: 'Sora', sans-serif; font-weight: 800; font-size: 24px; letter-spacing: -0.03em">{{p.priceLabel}}</span>
+<span style="font-size: 14px; color: #4A5470">{{p.summary}}</span>
+<span style="font-size: 13px; font-weight: 700; color: #2F4BB8">{{p.tag}}</span>
+</button>
+</sc-if>
+</sc-for>
+</div>
+</div>
+
+<!-- 2. details -->
+<div style="background: #FFFFFF; border: 1px solid #DCDFEA; border-radius: 24px; padding: 30px">
+<h2 style="margin: 0; font-size: 20px; font-weight: 800; display: flex; align-items: center; gap: 12px"><span style="width: 32px; height: 32px; border-radius: 10px; background: #0F1B3D; color: #FFB547; font-family: 'Sora', sans-serif; font-size: 15px; display: flex; align-items: center; justify-content: center">2</span>Your details</h2>
+<div style="margin-top: 20px; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 18px 16px">
+<div><label for="c-first" style="display: block; font-weight: 700; font-size: 14px; margin-bottom: 6px">First name *</label><input id="c-first" type="text" autocomplete="given-name" style="width: 100%; box-sizing: border-box; font: inherit; font-size: 16px; padding: 12px 14px; min-height: 48px; border: 1.5px solid #C5CADB; border-radius: 12px; background: #FFFFFF; color: #0B1430"></div>
+<div><label for="c-last" style="display: block; font-weight: 700; font-size: 14px; margin-bottom: 6px">Last name *</label><input id="c-last" type="text" autocomplete="family-name" style="width: 100%; box-sizing: border-box; font: inherit; font-size: 16px; padding: 12px 14px; min-height: 48px; border: 1.5px solid #C5CADB; border-radius: 12px; background: #FFFFFF; color: #0B1430"></div>
+<div><label for="c-email" style="display: block; font-weight: 700; font-size: 14px; margin-bottom: 6px">Email *</label><input id="c-email" type="email" autocomplete="email" style="width: 100%; box-sizing: border-box; font: inherit; font-size: 16px; padding: 12px 14px; min-height: 48px; border: 1.5px solid #C5CADB; border-radius: 12px; background: #FFFFFF; color: #0B1430"></div>
+<div><label for="c-phone" style="display: block; font-weight: 700; font-size: 14px; margin-bottom: 6px">Phone *</label><input id="c-phone" type="tel" autocomplete="tel" style="width: 100%; box-sizing: border-box; font: inherit; font-size: 16px; padding: 12px 14px; min-height: 48px; border: 1.5px solid #C5CADB; border-radius: 12px; background: #FFFFFF; color: #0B1430"></div>
+<div><label for="c-brokerage" style="display: block; font-weight: 700; font-size: 14px; margin-bottom: 6px">Brokerage</label><input id="c-brokerage" type="text" autocomplete="organization" style="width: 100%; box-sizing: border-box; font: inherit; font-size: 16px; padding: 12px 14px; min-height: 48px; border: 1.5px solid #C5CADB; border-radius: 12px; background: #FFFFFF; color: #0B1430"></div>
+<div><label for="c-country" style="display: block; font-weight: 700; font-size: 14px; margin-bottom: 6px">Country *</label><select id="c-country" autocomplete="country-name" style="width: 100%; box-sizing: border-box; font: inherit; font-size: 16px; padding: 12px 14px; min-height: 48px; border: 1.5px solid #C5CADB; border-radius: 12px; background: #FFFFFF; color: #0B1430"><option>United States</option><option>Canada</option><option>Other</option></select></div>
+<div style="grid-column: 1 / -1"><label for="c-zips" style="display: block; font-weight: 700; font-size: 14px; margin-bottom: 6px">Zip codes you want *</label><input id="c-zips" type="text" aria-describedby="c-zips-help" placeholder="e.g. 22314, 22301, 22305" style="width: 100%; box-sizing: border-box; font: inherit; font-size: 16px; padding: 12px 14px; min-height: 48px; border: 1.5px solid #C5CADB; border-radius: 12px; background: #FFFFFF; color: #0B1430"><p id="c-zips-help" style="margin: 6px 0 0; font-size: 13px; color: #4A5470">Your plan includes {{zipsLabel}}. We'll confirm availability before your territory goes live.</p></div>
+</div>
+</div>
+
+<!-- 3. payment -->
+<div style="background: #FFFFFF; border: 1px solid #DCDFEA; border-radius: 24px; padding: 30px">
+<h2 style="margin: 0; font-size: 20px; font-weight: 800; display: flex; align-items: center; gap: 12px"><span style="width: 32px; height: 32px; border-radius: 10px; background: #0F1B3D; color: #FFB547; font-family: 'Sora', sans-serif; font-size: 15px; display: flex; align-items: center; justify-content: center">3</span>Payment</h2>
+<div style="margin-top: 20px; border: 2px dashed #C5CADB; border-radius: 16px; padding: 32px 20px; text-align: center; color: #4A5470; background: #F8F9FC">
+<svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#4A5470" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="10" rx="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+<p style="margin: 10px 0 0; font-weight: 700; color: #26304D">[Your payment processor's secure card form goes here]</p>
+<p style="margin: 6px 0 0; font-size: 14px">Embed the hosted checkout from your payment provider in this box.</p>
+</div>
+<label style="margin-top: 20px; display: flex; gap: 12px; align-items: flex-start; font-size: 14px; line-height: 1.55; color: #26304D"><input type="checkbox" style="margin-top: 2px; flex-shrink: 0"><span>I agree to the <a href="Terms.dc.html">Terms and conditions</a>, <a href="Cancellation.dc.html">Cancellation policy</a> and <a href="Privacy.dc.html">Privacy policy</a>, and understand the referral fee is due at closing.</span></label>
+<label style="margin-top: 14px; display: flex; gap: 12px; align-items: flex-start; font-size: 14px; line-height: 1.55; color: #26304D"><input type="checkbox" style="margin-top: 2px; flex-shrink: 0"><span>Text me about new referrals and appointments. Message and data rates may apply. Reply STOP to opt out. (Optional)</span></label>
+</div>
+</div>
+
+<!-- RIGHT: summary -->
+<aside aria-label="Order summary" style="flex: 1 1 340px; min-width: 0; background: #0F1B3D; color: #FFFFFF; border-radius: 26px; padding: 30px; box-sizing: border-box">
+<p style="margin: 0; font-size: 13px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: #AEB7D3">Order summary</p>
+<p style="margin: 14px 0 0; font-family: 'Sora', sans-serif; font-weight: 800; font-size: 28px; letter-spacing: -0.03em">{{cur.name}} plan</p>
+<p style="margin: 4px 0 0; color: #C9D0E4">{{cur.billing}}</p>
+<dl style="margin: 22px 0 0; padding: 22px 0 0; border-top: 1px solid #33447A; display: flex; flex-direction: column; gap: 12px; font-size: 15px">
+<div style="display: flex; justify-content: space-between; gap: 12px"><dt style="color: #C9D0E4">Referrals per month</dt><dd style="margin: 0; font-weight: 700">{{cur.referrals}}</dd></div>
+<div style="display: flex; justify-content: space-between; gap: 12px"><dt style="color: #C9D0E4">Exclusive zip codes</dt><dd style="margin: 0; font-weight: 700">{{cur.zips}}</dd></div>
+<div style="display: flex; justify-content: space-between; gap: 12px"><dt style="color: #C9D0E4">Referral fee at closing</dt><dd style="margin: 0; font-weight: 700">{{cur.fee}}</dd></div>
+<div style="display: flex; justify-content: space-between; gap: 12px"><dt style="color: #C9D0E4">Lead replacement</dt><dd style="margin: 0; font-weight: 700">{{cur.replacement}}</dd></div>
+</dl>
+<div style="margin-top: 22px; padding-top: 22px; border-top: 1px solid #33447A; display: flex; justify-content: space-between; align-items: baseline; gap: 12px">
+<span style="font-weight: 700">Due today</span>
+<span style="font-family: 'Sora', sans-serif; font-weight: 800; font-size: 34px; letter-spacing: -0.03em; color: #FFB547">{{cur.price}}</span>
+</div>
+<button type="button" style="margin-top: 24px; width: 100%; font: inherit; font-weight: 800; font-size: 17px; padding: 17px; min-height: 56px; border: 0; border-radius: 14px; background: #FFB547; color: #0B1430; cursor: pointer">Complete purchase</button>
+<p style="margin: 14px 0 0; display: flex; gap: 8px; align-items: center; justify-content: center; font-size: 13px; color: #AEB7D3"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="10" rx="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>Secure, encrypted payment</p>
+<p style="margin: 18px 0 0; font-size: 14px; color: #C9D0E4; line-height: 1.55; text-align: center">Questions first? <a href="https://klientboost.us/contact-us" style="color: #FFB547; font-weight: 700">Book a call</a> or email <a href="mailto:support@klientboost.us" style="color: #FFB547; font-weight: 700">support@klientboost.us</a></p>
+</aside>
+</div>
+</section>
+
+<dc-import name="Footer" hint-size="100%,480px"></dc-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":2700}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { plan: 'advanced' };
+  }
+  renderVals() {
+    var self = this;
+    var PLANS = [
+      { id: 'essential', name: 'Essential', price: '$375', per: '/yr', billing: 'Billed yearly', referrals: '3–4', zips: '3', fee: '15%', replacement: '—', tag: 'Annual' },
+      { id: 'advanced', name: 'Advanced', price: '$575', per: '/yr', billing: 'Billed yearly', referrals: '4–5', zips: '5', fee: '15%', replacement: '—', tag: 'Most popular' },
+      { id: 'elite', name: 'Elite', price: '$875', per: '/yr', billing: 'Billed yearly', referrals: '6–8', zips: '8', fee: '10%', replacement: 'Included', tag: 'Lowest fee · account manager' },
+      { id: 'flex', name: 'Flex', price: '$200', per: '/mo', billing: 'Billed monthly', referrals: '2–3', zips: '5', fee: '15%', replacement: 'Included', tag: 'Pay monthly' }
+    ];
+    var cur = PLANS.filter(function (p) { return p.id === self.state.plan; })[0];
+    return {
+      plans: PLANS.map(function (p) {
+        return {
+          name: p.name,
+          priceLabel: p.price + p.per,
+          summary: p.referrals + ' referrals/mo · ' + p.zips + ' zips · ' + p.fee + ' fee',
+          tag: p.tag,
+          selected: p.id === self.state.plan,
+          unselected: p.id !== self.state.plan,
+          pick: function () { self.setState({ plan: p.id }); }
+        };
+      }),
+      cur: cur,
+      zipsLabel: cur.zips + ' exclusive zip codes'
+    };
+  }
+}
+</script>
+</body>
+</html>

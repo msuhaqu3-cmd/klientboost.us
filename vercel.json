@@ -1,0 +1,22 @@
+{
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "redirects": [
+    { "source": "/home", "destination": "/", "permanent": true },
+    { "source": "/trial", "destination": "/pricing", "permanent": true },
+    { "source": "/faq", "destination": "/#faq", "permanent": true },
+    { "source": "/FAQ", "destination": "/#faq", "permanent": true },
+    { "source": "/for-buyer", "destination": "/for-buyers", "permanent": true },
+    { "source": "/for-seller", "destination": "/for-sellers", "permanent": true },
+    { "source": "/Cancellation-Policy", "destination": "/cancellation-policy", "permanent": true },
+    { "source": "/Communication-Policy", "destination": "/communication-policy", "permanent": true },
+    { "source": "/Terms-of-Use", "destination": "/terms-of-use", "permanent": true }
+  ],
+  "headers": [
+    { "source": "/assets/(.*)", "headers": [{ "key": "Cache-Control", "value": "public, max-age=3600" }] },
+    { "source": "/(.*)", "headers": [
+      { "key": "X-Content-Type-Options", "value": "nosniff" },
+      { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" }
+    ] }
+  ]
+}
