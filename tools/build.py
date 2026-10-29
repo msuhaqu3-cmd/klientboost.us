@@ -9,7 +9,7 @@ import sys
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 DESIGN = ROOT / "design"
-SITE_URL = "https://www.klientboost.us"
+SITE_URL = "https://klientboost.us"
 ACCENT = "#FFB547"
 
 # design file -> (output file, URL path, <title>, meta description)

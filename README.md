@@ -1,6 +1,6 @@
 # KlientBoost website
 
-Static site for https://www.klientboost.us, hosted on Vercel.
+Static site for https://klientboost.us, hosted on Vercel.
 
 - `design/` – the page designs (`*.dc.html`) this site is generated from.
 - `tools/build.py` – turns the designs into the HTML pages at the repo root:
