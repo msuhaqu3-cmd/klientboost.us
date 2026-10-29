@@ -15,9 +15,9 @@ ACCENT = "#FFB547"
 # design file -> (output file, URL path, <title>, meta description)
 PAGES = {
     "Main": ("index.html", "/", "KlientBoost | Exclusive Real Estate Referrals & Appointments",
-             "Exclusive, phone-verified buyer and seller referrals in the zip codes you choose, with appointments set for you. Plans from $375 a year."),
+             "Exclusive, phone verified buyer and seller referrals in the zip codes you choose, with appointments set for you. Plans from $375 a year."),
     "Story": ("about-us.html", "/about-us", "Our Story | KlientBoost",
-              "KlientBoost is a relationship-first referral network that connects real estate agents with verified buyers and sellers in their local markets."),
+              "KlientBoost is a relationship first referral network that connects real estate agents with verified buyers and sellers in their local markets."),
     "Buyers": ("for-buyers.html", "/for-buyers", "For Buyers | KlientBoost",
                "Tell us what you're looking for and we'll match you with a trusted local agent who knows the area."),
     "Sellers": ("for-sellers.html", "/for-sellers", "For Sellers | KlientBoost",
@@ -66,21 +66,17 @@ PATCHES = {
         ("A local agent who covers your zip code will reach out soon to talk about your sale.",
          "Your email app should open with your details filled in. Press send, and a local agent who covers your zip code will reach out. If it didn't open, email us at support@klientboost.us."),
     ],
-    "Checkout": [
-        ('<div style="flex: 999 1 560px; min-width: 0; display: flex; flex-direction: column; gap: 24px">',
-         '<div id="checkout-form" style="flex: 999 1 560px; min-width: 0; display: flex; flex-direction: column; gap: 24px">'),
-        ("Three quick steps: pick a plan, add your details, then pay securely.",
-         "Pick a plan and add your details. We'll confirm your zip codes, then send you a secure payment link."),
-        ("Payment</h2>", "Confirm</h2>"),
-        ('<p style="margin: 10px 0 0; font-weight: 700; color: #26304D">[Your payment processor\'s secure card form goes here]</p>\n<p style="margin: 6px 0 0; font-size: 14px">Embed the hosted checkout from your payment provider in this box.</p>',
-         '<p style="margin: 10px 0 0; font-weight: 700; color: #26304D">No card needed today</p>\n<p style="margin: 6px 0 0; font-size: 14px">Once we confirm your zip codes are available, we\'ll email you a secure payment link.</p>'),
-        ('<span style="font-weight: 700">Due today</span>', '<span style="font-weight: 700">Plan price</span>'),
-        ('<button type="button" style="margin-top: 24px; width: 100%; font: inherit; font-weight: 800; font-size: 17px; padding: 17px; min-height: 56px; border: 0; border-radius: 14px; background: #FFB547; color: #0B1430; cursor: pointer">Complete purchase</button>',
-         '<button type="button" onClick="{{submit}}" style="margin-top: 24px; width: 100%; font: inherit; font-weight: 800; font-size: 17px; padding: 17px; min-height: 56px; border: 0; border-radius: 14px; background: #FFB547; color: #0B1430; cursor: pointer">Request this plan</button>\n'
-         '<sc-if value="{{sent}}" hint-placeholder-val="{{false}}"><p role="status" style="margin: 14px 0 0; background: #1B2A57; border-radius: 12px; padding: 14px; font-size: 14px; line-height: 1.55; color: #FFFFFF">Your email app should open with your request filled in. Press send and we\'ll confirm your zip codes. If it didn\'t open, email support@klientboost.us.</p></sc-if>'),
-        ('Secure, encrypted payment</p>', 'Nothing is charged on this page</p>'),
-        ("zipsLabel: cur.zips + ' exclusive zip codes'",
-         "zipsLabel: cur.zips + ' exclusive zip codes',\n      sent: !!self.state.sent,\n      submit: function () { if (window.KB) KB.sendForm('#checkout-form', 'Plan request: ' + cur.name + ' (' + cur.price + ')'); self.setState({ sent: true }); }"),
+    "Main": [
+        ("ZIP [your zip] · preapproved", "ZIP 22314 · preapproved"),
+        (" [Add your replacement terms here.]", ""),
+        ('<a href="Checkout.dc.html" style="margin-top: 30px; text-align: center; text-decoration: none; padding: 16px; border-radius: 14px; font-weight: 800; color: #FFFFFF; border: 2px solid #4A5C94">Choose Essential</a>',
+         '<a href="/pricing?plan=essential" style="margin-top: 30px; text-align: center; text-decoration: none; padding: 16px; border-radius: 14px; font-weight: 800; color: #FFFFFF; border: 2px solid #4A5C94">Choose Essential</a>'),
+        ('<a href="Checkout.dc.html" style="margin-top: 30px; text-align: center; text-decoration: none; padding: 16px; border-radius: 14px; font-weight: 800; color: #FFFFFF; background: #0F1B3D">Choose Advanced</a>',
+         '<a href="/pricing?plan=advanced" style="margin-top: 30px; text-align: center; text-decoration: none; padding: 16px; border-radius: 14px; font-weight: 800; color: #FFFFFF; background: #0F1B3D">Choose Advanced</a>'),
+        ('<a href="Checkout.dc.html" style="margin-top: 30px; text-align: center; text-decoration: none; padding: 16px; border-radius: 14px; font-weight: 800; color: #0B1430; background: {{accent}}">Choose Elite</a>',
+         '<a href="/pricing?plan=elite" style="margin-top: 30px; text-align: center; text-decoration: none; padding: 16px; border-radius: 14px; font-weight: 800; color: #0B1430; background: {{accent}}">Choose Elite</a>'),
+        ('<a href="Checkout.dc.html" style="margin-top: 30px; text-align: center; text-decoration: none; padding: 16px; border-radius: 14px; font-weight: 800; color: #FFFFFF; background: #0F1B3D">Start with Flex</a>',
+         '<a href="/pricing?plan=flex" style="margin-top: 30px; text-align: center; text-decoration: none; padding: 16px; border-radius: 14px; font-weight: 800; color: #FFFFFF; background: #0F1B3D">Start with Flex</a>'),
     ],
 }
 
@@ -118,6 +114,9 @@ def build_page(name, nav, footer):
         else:
             raise SystemExit(f"{name}: patch target not found: {old[:60]}")
 
+    # Live site: hide the testimonials block until real, approved quotes exist.
+    markup = re.sub(r"<!-- TESTIMONIALS -->.*?</section>\s*", "", markup, flags=re.S)
+    markup = markup.replace("Last updated: [date]", "Last updated: October 2026")
     markup = re.sub(r'<dc-import name="Nav"[^>]*></dc-import>', nav, markup)
     markup = re.sub(r'<dc-import name="Footer"[^>]*></dc-import>', footer, markup)
     markup = markup.replace("{{accent}}", ACCENT)

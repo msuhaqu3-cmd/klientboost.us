@@ -188,6 +188,51 @@
     }
   };
 
+  // Checks the checkout form, then asks /api/checkout for a Stripe Checkout
+  // page and sends the visitor there. done(errorMessage | null).
+  window.KB.startCheckout = function (selector, plan, done) {
+    var box = document.querySelector(selector);
+    if (!box) return done('Something went wrong. Please refresh the page and try again.');
+    var data = { plan: plan };
+    var missing = [];
+    box.querySelectorAll('input[name], select[name], textarea[name]').forEach(function (el) {
+      var val = el.type === 'checkbox' ? el.checked : (el.value || '').trim();
+      data[el.name] = val;
+      var bad = el.required && (el.type === 'checkbox' ? !el.checked : !val);
+      if (el.name === 'email' && val && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(val)) bad = true;
+      if (el.name === 'phone' && val && val.replace(/\D/g, '').length < 10) bad = true;
+      el.setAttribute('aria-invalid', bad ? 'true' : 'false');
+      if (bad) {
+        var l = el.id && box.querySelector('label[for="' + el.id + '"]');
+        var name = el.type === 'checkbox' ? 'agreement to the terms'
+          : (l ? l.textContent.replace(/\*|\(.*\)/g, '').trim().toLowerCase() : el.name);
+        missing.push(name);
+      }
+    });
+    if (missing.length) {
+      var first = box.querySelector('[aria-invalid="true"]');
+      if (first) first.focus();
+      return done('Please check: ' + missing.join(', ') + '.');
+    }
+    fetch('/api/checkout', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    }).then(function (r) {
+      return r.json().catch(function () { return {}; }).then(function (j) { return { status: r.status, ok: r.ok, body: j }; });
+    }).then(function (res) {
+      if (res.ok && res.body.url) { done(null); window.location.href = res.body.url; return; }
+      if (res.status === 503) {
+        window.KB.sendForm(selector, 'Plan request: ' + plan);
+        done('Online payment is being switched on. Your email app opened with your details, so press send and we\'ll email you a secure payment link.');
+        return;
+      }
+      done(res.body.error || 'Something went wrong. Please try again or email support@klientboost.us.');
+    }).catch(function () {
+      done('We couldn\'t reach the payment page. Check your connection and try again.');
+    });
+  };
+
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);
   else boot();
 })();
