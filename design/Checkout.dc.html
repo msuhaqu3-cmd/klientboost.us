@@ -46,7 +46,7 @@ input[aria-invalid=true],select[aria-invalid=true]{border-color:#C2410C!importan
 <div style="margin-top: 36px; display: flex; flex-wrap: wrap; gap: 32px; align-items: flex-start">
 
 <!-- LEFT -->
-<div id="checkout-form" style="flex: 999 1 560px; min-width: 0; display: flex; flex-direction: column; gap: 20px">
+<div id="checkout-form" data-plan="{{cur.id}}" style="flex: 999 1 560px; min-width: 0; display: flex; flex-direction: column; gap: 20px">
 
 <!-- 1. plan -->
 <div style="background: #FFFFFF; border: 1px solid #DCDFEA; border-radius: 24px; padding: 28px">
@@ -101,21 +101,14 @@ input[aria-invalid=true],select[aria-invalid=true]{border-color:#C2410C!importan
 </div>
 </div>
 
-<!-- 4. confirm -->
-<div style="background: #FFFFFF; border: 1px solid #DCDFEA; border-radius: 24px; padding: 28px">
-<h2 style="margin: 0; font-size: 20px; font-weight: 800; display: flex; align-items: center; gap: 12px"><span style="width: 32px; height: 32px; border-radius: 10px; background: #0F1B3D; color: #FFB547; font-family: 'Sora', sans-serif; font-size: 15px; display: flex; align-items: center; justify-content: center">4</span>Confirm</h2>
-<label style="margin-top: 18px; display: flex; gap: 12px; align-items: flex-start; font-size: 14px; line-height: 1.55; color: #26304D"><input id="c-agree" name="agree_terms" required type="checkbox" style="margin-top: 2px; flex-shrink: 0"><span>I agree to the <a href="Terms.dc.html">Terms and conditions</a>, <a href="Cancellation.dc.html">Cancellation policy</a> and <a href="Privacy.dc.html">Privacy policy</a>, and understand the referral fee is due at closing. *</span></label>
-<label style="margin-top: 14px; display: flex; gap: 12px; align-items: flex-start; font-size: 14px; line-height: 1.55; color: #26304D"><input id="c-sms" name="sms_updates" type="checkbox" style="margin-top: 2px; flex-shrink: 0"><span>Text me about new referrals and appointments. Message and data rates may apply. Reply STOP to opt out. (Optional)</span></label>
-</div>
-
-<!-- 5. payment (opens on this page) -->
-<sc-if value="{{isPay}}" hint-placeholder-val="{{false}}">
+<!-- 4. payment (always open on this page) -->
 <div id="pay-step" style="background: #FFFFFF; border: 2px solid #2F4BB8; border-radius: 24px; padding: 28px">
-<h2 style="margin: 0; font-size: 20px; font-weight: 800; display: flex; align-items: center; gap: 12px"><span style="width: 32px; height: 32px; border-radius: 10px; background: #2F4BB8; color: #FFFFFF; font-family: 'Sora', sans-serif; font-size: 15px; display: flex; align-items: center; justify-content: center">5</span>Payment</h2>
-<p style="margin: 8px 0 0; font-size: 14px; line-height: 1.55; color: #4A5470">Enter your card to finish your {{cur.name}} plan. Have a coupon code? Add it in the payment form before you press Pay.</p>
-<div data-pay-frame="1" style="margin-top: 18px; border: 2px dashed #C5CADB; border-radius: 16px; padding: 48px 20px; text-align: center; color: #4A5470; background: #F8F9FC; font-weight: 600">The secure card form with a coupon code field loads here.</div>
+<h2 style="margin: 0; font-size: 20px; font-weight: 800; display: flex; align-items: center; gap: 12px"><span style="width: 32px; height: 32px; border-radius: 10px; background: #2F4BB8; color: #FFFFFF; font-family: 'Sora', sans-serif; font-size: 15px; display: flex; align-items: center; justify-content: center">4</span>Payment</h2>
+<p style="margin: 8px 0 0; font-size: 14px; line-height: 1.55; color: #4A5470">Enter your card and press <strong>Submit</strong> to start your {{cur.name}} plan. Have a coupon code? Add it below before you submit.</p>
+<label style="margin-top: 14px; display: flex; gap: 12px; align-items: flex-start; font-size: 14px; line-height: 1.55; color: #26304D"><input id="c-sms" name="sms_updates" type="checkbox" style="margin-top: 2px; flex-shrink: 0"><span>Text me about new referrals and appointments. Message and data rates may apply. Reply STOP to opt out. (Optional)</span></label>
+<div data-pay-frame="1" style="margin-top: 18px; border: 2px dashed #C5CADB; border-radius: 16px; padding: 48px 20px; text-align: center; color: #4A5470; background: #F8F9FC; font-weight: 600">The secure card form, coupon code field and Submit button load here.</div>
+<p style="margin: 14px 0 0; font-size: 13px; line-height: 1.55; color: #4A5470">By pressing Submit you agree to our <a href="Terms.dc.html">Terms and conditions</a>, <a href="Cancellation.dc.html">Cancellation policy</a> and <a href="Privacy.dc.html">Privacy policy</a>, and understand the referral fee is due at closing. Your card details are handled by our payment processor, never stored by us.</p>
 </div>
-</sc-if>
 </div>
 
 <!-- RIGHT: summary -->
@@ -135,12 +128,8 @@ input[aria-invalid=true],select[aria-invalid=true]{border-color:#C2410C!importan
 </div>
 <p style="margin: 6px 0 0; font-size: 13px; color: #AEB7D3; text-align: right">{{cur.renews}}</p>
 
-<sc-if value="{{hasError}}" hint-placeholder-val="{{false}}">
-<p role="alert" style="margin: 18px 0 0; background: #FFF4E0; border-radius: 12px; padding: 12px 14px; font-size: 14px; line-height: 1.5; color: #5C3B00; font-weight: 600">{{errorText}}</p>
-</sc-if>
-
-<button type="button" onClick="{{pay}}" aria-busy="{{busyAttr}}" style="margin-top: 20px; width: 100%; font: inherit; font-weight: 800; font-size: 17px; padding: 17px; min-height: 56px; border: 0; border-radius: 14px; background: #FFB547; color: #0B1430; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="10" rx="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>{{payLabel}}</button>
-<p style="margin: 14px 0 0; font-size: 13px; color: #AEB7D3; text-align: center; line-height: 1.5">You pay right here on this page. Coupon codes can be added in the payment form. Your card details are handled by our payment processor, never stored by us.</p>
+<a href="#pay-step" style="margin-top: 20px; display: flex; align-items: center; justify-content: center; gap: 10px; text-decoration: none; font-weight: 800; font-size: 16px; padding: 15px; border-radius: 14px; background: #1B2A57; color: #FFFFFF"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="10" rx="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>Pay in step 4</a>
+<p style="margin: 12px 0 0; font-size: 13px; color: #AEB7D3; text-align: center; line-height: 1.5">Payment, coupon code and Submit are in step 4 on this page.</p>
 
 <p style="margin: 18px 0 0; font-size: 14px; color: #C9D0E4; line-height: 1.55; text-align: center">Questions first? <a href="Contact.dc.html" style="color: #FFB547; font-weight: 700">Book a call</a> or email <a href="mailto:support@klientboost.us" style="color: #FFB547; font-weight: 700">support@klientboost.us</a></p>
 </aside>
@@ -155,9 +144,12 @@ input[aria-invalid=true],select[aria-invalid=true]{border-color:#C2410C!importan
 class Component extends DCLogic {
   constructor(props) {
     super(props);
-    this.state = { plan: 'advanced', status: 'idle', error: '' };
+    var q0 = (typeof window !== 'undefined' && window.location && window.location.search) || '';
+    var p0 = q0.match(/plan=(essential|advanced|elite|flex)/);
+    this.state = { plan: p0 ? p0[1] : 'advanced', status: 'idle', pf: {} };
   }
   componentDidMount() {
+    var self = this;
     var q = (typeof window !== 'undefined' && window.location && window.location.search) || '';
     // After paying inside the embedded form, the processor reloads this page in
     // the frame; move the whole window to the success screen instead.
@@ -173,10 +165,30 @@ class Component extends DCLogic {
     if (st) next.status = st[1];
     if (pl) next.plan = pl[1];
     if (st || pl) this.setState(next);
+    // Copy name, email and phone into the payment form once a field is finished.
+    var form = document.getElementById('checkout-form');
+    if (form) {
+      form.addEventListener('change', function (e) {
+        var n = e.target && e.target.name;
+        if (n !== 'first_name' && n !== 'last_name' && n !== 'email' && n !== 'phone') return;
+        var pf = {};
+        ['first_name', 'last_name', 'email', 'phone'].forEach(function (k) {
+          var el = form.querySelector('[name="' + k + '"]');
+          pf[k] = el ? el.value.trim() : '';
+        });
+        self.setState({ pf: pf });
+      });
+    }
   }
   renderVals() {
     var self = this;
     var s = this.state;
+    var LINKS = {
+      essential: 'https://link.fastpaydirect.com/payment-link/6ae4c1d000921ddbe8ee0606',
+      advanced: 'https://link.fastpaydirect.com/payment-link/6ae4c23e5b49394de8f58211',
+      elite: 'https://link.fastpaydirect.com/payment-link/6ae4c2885b49394de8f58213',
+      flex: 'https://link.fastpaydirect.com/payment-link/6ae4c2c300921ddbe8ee060b'
+    };
     var PLANS = [
       { id: 'essential', name: 'Essential', price: '$375', per: '/yr', billing: 'Billed yearly', renews: 'Renews every year', referrals: '3 to 4', zips: '3', fee: '15%', replacement: 'Not included', tag: 'Annual' },
       { id: 'advanced', name: 'Advanced', price: '$575', per: '/yr', billing: 'Billed yearly', renews: 'Renews every year', referrals: '4 to 5', zips: '5', fee: '15%', replacement: 'Not included', tag: 'Most popular' },
@@ -184,7 +196,12 @@ class Component extends DCLogic {
       { id: 'flex', name: 'Flex', price: '$200', per: '/mo', billing: 'Billed monthly', renews: 'Renews every month', referrals: '2 to 3', zips: '5', fee: '15%', replacement: 'Included', tag: 'Pay monthly' }
     ];
     var cur = PLANS.filter(function (p) { return p.id === s.plan; })[0] || PLANS[1];
-    var busy = s.status === 'busy';
+    var pf = s.pf || {};
+    var qs = [];
+    if (pf.first_name) qs.push('firstName=' + encodeURIComponent(pf.first_name));
+    if (pf.last_name) qs.push('lastName=' + encodeURIComponent(pf.last_name));
+    if (pf.email) qs.push('email=' + encodeURIComponent(pf.email));
+    if (pf.phone) qs.push('phone=' + encodeURIComponent(pf.phone.replace(/[^\d+]/g, '')));
     return {
       plans: PLANS.map(function (p) {
         return {
@@ -194,41 +211,15 @@ class Component extends DCLogic {
           tag: p.tag,
           selected: p.id === cur.id,
           unselected: p.id !== cur.id,
-          pick: function () { self.setState({ plan: p.id, status: (s.status === 'pay' || s.status === 'demo') ? 'idle' : s.status, payUrl: '' }); }
+          pick: function () { self.setState({ plan: p.id }); }
         };
       }),
       cur: cur,
       zipsLabel: cur.zips + ' exclusive zip codes',
+      payUrl: LINKS[cur.id] + (qs.length ? '?' + qs.join('&') : ''),
       isSuccess: s.status === 'success',
       showForm: s.status !== 'success',
-      isCancelled: s.status === 'cancelled',
-      isPay: s.status === 'pay' || s.status === 'demo',
-      payUrl: s.payUrl || '',
-      hasError: !!s.error,
-      errorText: s.error,
-      busyAttr: busy ? 'true' : 'false',
-      payLabel: busy ? 'Loading payment form…' : ((s.status === 'pay' || s.status === 'demo') ? 'Go to payment form' : 'Continue to payment'),
-      pay: function () {
-        if (busy) return;
-        var jump = function () {
-          setTimeout(function () {
-            var el = document.getElementById('pay-step');
-            if (el && el.scrollIntoView) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-          }, 60);
-        };
-        if (s.status === 'pay' || s.status === 'demo') { jump(); return; }
-        if (window.KB && window.KB.startCheckout) {
-          self.setState({ status: 'busy', error: '' });
-          window.KB.startCheckout('#checkout-form', cur.id, function (err, url) {
-            if (err || !url) { self.setState({ status: 'idle', error: err || 'Something went wrong. Please try again.' }); return; }
-            self.setState({ status: 'pay', payUrl: url, error: '' });
-            jump();
-          });
-        } else {
-          self.setState({ status: 'demo' });
-          jump();
-        }
-      }
+      isCancelled: s.status === 'cancelled'
     };
   }
 }

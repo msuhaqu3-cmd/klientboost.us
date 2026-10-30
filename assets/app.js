@@ -114,7 +114,11 @@
         } else {
           var next = out === true ? '' : String(out);
           // Only touch changed attributes: re-setting an iframe's src reloads it.
-          if (node.getAttribute(name) !== next) node.setAttribute(name, next);
+          if (node.getAttribute(name) !== next) {
+            node.setAttribute(name, next);
+            // data-src="{{…}}" on an iframe: load only the real address, never the raw template.
+            if (name === 'data-src' && next) node.setAttribute('src', next);
+          }
         }
       });
     });
@@ -145,6 +149,7 @@
     comp.__render();
     if (typeof comp.componentDidMount === 'function') comp.componentDidMount();
     root.removeAttribute('data-cloak');
+    if (document.getElementById('checkout-form') && window.KB.watchLead) window.KB.watchLead('#checkout-form');
   }
 
   // Collects every filled field in a container and opens a pre-written email
@@ -237,6 +242,44 @@
       done(res.body.error || 'Something went wrong. Please try again or email support@klientboost.us.');
     }).catch(function () {
       done('We couldn\'t reach the payment page. Check your connection and try again.');
+    });
+  };
+
+  // Onboarding details on the checkout page: sent to /api/lead (and from there to
+  // GoHighLevel) when the agent moves into the payment form or leaves the page.
+  window.KB.watchLead = function (selector) {
+    var last = '';
+    function collect() {
+      var box = document.querySelector(selector);
+      if (!box) return null;
+      var data = { plan: box.getAttribute('data-plan') || '' };
+      box.querySelectorAll('input[name], select[name], textarea[name]').forEach(function (el) {
+        data[el.name] = el.type === 'checkbox' ? el.checked : (el.value || '').trim();
+      });
+      if (!data.email && !data.phone) return null;
+      return data;
+    }
+    function send() {
+      var data = collect();
+      if (!data) return;
+      var body = JSON.stringify(data);
+      if (body === last) return;
+      last = body;
+      try {
+        if (navigator.sendBeacon) {
+          navigator.sendBeacon('/api/lead', new Blob([body], { type: 'application/json' }));
+        } else {
+          fetch('/api/lead', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: body, keepalive: true });
+        }
+      } catch (e) {}
+    }
+    window.addEventListener('blur', function () {
+      setTimeout(function () {
+        if (document.activeElement && document.activeElement.tagName === 'IFRAME') send();
+      }, 0);
+    });
+    document.addEventListener('visibilitychange', function () {
+      if (document.visibilityState === 'hidden') send();
     });
   };
 

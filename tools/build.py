@@ -68,8 +68,8 @@ PATCHES = {
          "Your email app should open with your details filled in. Press send, and a local agent who covers your zip code will reach out. If it didn't open, email us at support@klientboost.us."),
     ],
     "Checkout": [
-        ('<div data-pay-frame="1" style="margin-top: 18px; border: 2px dashed #C5CADB; border-radius: 16px; padding: 48px 20px; text-align: center; color: #4A5470; background: #F8F9FC; font-weight: 600">The secure card form with a coupon code field loads here.</div>',
-         '<sc-if value="{{payUrl}}" hint-placeholder-val="{{false}}"><iframe class="kb-pay" src="{{payUrl}}" title="Secure payment form" allow="payment" style="margin-top: 18px; display: block; width: 100%; border: 0; border-radius: 16px; background: #FFFFFF"></iframe></sc-if>'),
+        ('<div data-pay-frame="1" style="margin-top: 18px; border: 2px dashed #C5CADB; border-radius: 16px; padding: 48px 20px; text-align: center; color: #4A5470; background: #F8F9FC; font-weight: 600">The secure card form, coupon code field and Submit button load here.</div>',
+         '<iframe class="kb-pay" src="about:blank" data-src="{{payUrl}}" title="Secure payment form" allow="payment" style="margin-top: 18px; display: block; width: 100%; border: 1px solid #DCDFEA; border-radius: 16px; background: #FFFFFF"></iframe>'),
     ],
     "Main": [
         ("ZIP [your zip] · preapproved", "ZIP 22314 · preapproved"),
