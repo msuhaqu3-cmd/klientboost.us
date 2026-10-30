@@ -13,13 +13,21 @@ Forms (buyers, sellers, contact, plan requests) open a pre-filled email to
 support@klientboost.us. Swap `KB.sendForm` in `assets/app.js` for a CRM or
 form-service call when one is ready.
 
-## Payments (Stripe)
+## Payments (GoHighLevel)
 
-`api/checkout.js` creates a Stripe Checkout page for the chosen plan
-(Essential $375/yr, Advanced $575/yr, Elite $875/yr, Flex $200/mo) and stores
-the onboarding details as metadata on the payment and subscription.
+`api/checkout.js` sends each plan to its GoHighLevel payment link
+(KlientBoost sub-account → Payments → Payment Links), processed by the Stripe
+account connected in GoHighLevel. After paying, GoHighLevel redirects to
+`/pricing?status=success`.
 
-To switch it on, add `STRIPE_SECRET_KEY` (your Stripe secret key) under
-Vercel → klientboost project → Settings → Environment Variables, then redeploy.
-Until the key is set, the checkout falls back to emailing the details to
-support@klientboost.us.
+| Plan | Price | GHL product |
+| --- | --- | --- |
+| Essential | $375 / year | KlientBoost Essential Plan |
+| Advanced | $575 / year | KlientBoost Advanced Plan |
+| Elite | $875 / year | KlientBoost Elite Plan |
+| Flex | $200 / month | KlientBoost Flex Plan |
+
+Optional: set `GHL_WEBHOOK_URL` (a GoHighLevel workflow "Inbound Webhook"
+trigger URL) in Vercel to also send the onboarding details (license, MLS ID,
+service areas) into GoHighLevel Contacts. If a `STRIPE_SECRET_KEY` is set and a
+plan has no GHL link, Stripe Checkout is used instead.

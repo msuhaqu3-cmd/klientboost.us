@@ -163,7 +163,7 @@ sc-if,sc-for{display:contents}
 </sc-if>
 
 <button type="button" onClick="{{pay}}" aria-busy="{{busyAttr}}" style="margin-top: 20px; width: 100%; font: inherit; font-weight: 800; font-size: 17px; padding: 17px; min-height: 56px; border: 0; border-radius: 14px; background: #FFB547; color: #0B1430; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="10" rx="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>{{payLabel}}</button>
-<p style="margin: 14px 0 0; font-size: 13px; color: #AEB7D3; text-align: center; line-height: 1.5">You'll pay on Stripe's secure checkout page. We never see or store your card details.</p>
+<p style="margin: 14px 0 0; font-size: 13px; color: #AEB7D3; text-align: center; line-height: 1.5">You'll pay on our secure checkout page. Your card details are handled by our payment processor, never stored by us.</p>
 
 <sc-if value="{{isDemo}}" hint-placeholder-val="{{false}}">
 <p role="status" style="margin: 14px 0 0; background: #1B2A57; border-radius: 12px; padding: 12px 14px; font-size: 14px; color: #FFFFFF">On the live site this opens Stripe's secure payment page.</p>
