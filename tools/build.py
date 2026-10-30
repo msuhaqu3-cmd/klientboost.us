@@ -11,6 +11,7 @@ ROOT = pathlib.Path(__file__).resolve().parent.parent
 DESIGN = ROOT / "design"
 SITE_URL = "https://klientboost.us"
 ACCENT = "#FFB547"
+APP_VERSION = "1"
 
 # design file -> (output file, URL path, <title>, meta description)
 PAGES = {
@@ -168,7 +169,7 @@ sc-if,sc-for{{display:contents}}
 <script type="text/x-dc" id="page-logic">
 {logic}
 </script>
-<script src="/assets/app.js"></script>
+<script src="/assets/app.js?v={APP_VERSION}"></script>
 </body>
 </html>
 """
@@ -177,6 +178,9 @@ sc-if,sc-for{{display:contents}}
 
 
 def main():
+    global APP_VERSION
+    import hashlib
+    APP_VERSION = hashlib.sha1((ROOT / "assets" / "app.js").read_bytes()).hexdigest()[:10]
     nav = component_markup("Nav")
     footer = component_markup("Footer")
     built = [build_page(n, nav, footer) for n in PAGES]
