@@ -66,6 +66,10 @@ PATCHES = {
         ("A local agent who covers your zip code will reach out soon to talk about your sale.",
          "Your email app should open with your details filled in. Press send, and a local agent who covers your zip code will reach out. If it didn't open, email us at support@klientboost.us."),
     ],
+    "Checkout": [
+        ('<div data-pay-frame="1" style="margin-top: 18px; border: 2px dashed #C5CADB; border-radius: 16px; padding: 48px 20px; text-align: center; color: #4A5470; background: #F8F9FC; font-weight: 600">The secure card form with a coupon code field loads here.</div>',
+         '<sc-if value="{{payUrl}}" hint-placeholder-val="{{false}}"><iframe class="kb-pay" src="{{payUrl}}" title="Secure payment form" allow="payment" style="margin-top: 18px; display: block; width: 100%; border: 0; border-radius: 16px; background: #FFFFFF"></iframe></sc-if>'),
+    ],
     "Main": [
         ("ZIP [your zip] · preapproved", "ZIP 22314 · preapproved"),
         (" [Add your replacement terms here.]", ""),
@@ -151,6 +155,8 @@ def build_page(name, nav, footer):
 html{{scroll-behavior:smooth}}
 [id]{{scroll-margin-top:96px}}
 sc-if,sc-for{{display:contents}}
+.kb-pay{{height:820px}}
+@media (max-width:900px){{.kb-pay{{height:1320px}}}}
 @media (max-width:720px){{#app>div>div[style*="sticky"]{{position:static!important}}[id]{{scroll-margin-top:12px}}}}
 [data-cloak] sc-if,[data-cloak] sc-for{{visibility:hidden}}
 </style>

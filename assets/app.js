@@ -112,7 +112,9 @@
         } else if (out === false || out == null) {
           node.removeAttribute(name);
         } else {
-          node.setAttribute(name, out === true ? '' : String(out));
+          var next = out === true ? '' : String(out);
+          // Only touch changed attributes: re-setting an iframe's src reloads it.
+          if (node.getAttribute(name) !== next) node.setAttribute(name, next);
         }
       });
     });
@@ -221,7 +223,12 @@
     }).then(function (r) {
       return r.json().catch(function () { return {}; }).then(function (j) { return { status: r.status, ok: r.ok, body: j }; });
     }).then(function (res) {
-      if (res.ok && res.body.url) { done(null); window.location.href = res.body.url; return; }
+      if (res.ok && res.body.url) {
+        // Stripe Checkout can't be shown inside a page, so it opens full screen.
+        if (/^https:\/\/checkout\.stripe\.com\//.test(res.body.url)) { window.location.href = res.body.url; return; }
+        done(null, res.body.url);
+        return;
+      }
       if (res.status === 503) {
         window.KB.sendForm(selector, 'Plan request: ' + plan);
         done('Online payment is being switched on. Your email app opened with your details, so press send and we\'ll email you a secure payment link.');
