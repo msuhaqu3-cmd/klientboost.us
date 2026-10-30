@@ -37,7 +37,7 @@ input[aria-invalid=true],select[aria-invalid=true]{border-color:#C2410C!importan
 
 <sc-if value="{{showForm}}" hint-placeholder-val="{{true}}">
 <h1 style="margin: 0; font-family: 'Sora', sans-serif; font-weight: 800; font-size: clamp(34px, 4.4vw, 52px); letter-spacing: -0.04em; line-height: 1.06">Get started with KlientBoost.</h1>
-<p style="margin: 12px 0 0; font-size: 17px; color: #4A5470">Pick a plan, tell us where you work, and pay securely. It takes about three minutes.</p>
+<p style="margin: 12px 0 0; font-size: 17px; color: #4A5470">Fill in one form and press Submit. It takes about three minutes.</p>
 
 <sc-if value="{{isCancelled}}" hint-placeholder-val="{{false}}">
 <p role="status" style="margin: 24px 0 0; background: #FFF4E0; border: 1px solid #F3D29B; border-radius: 14px; padding: 14px 18px; color: #5C3B00; font-weight: 600">Payment was cancelled, so you haven't been charged. Your details are below whenever you're ready.</p>
@@ -46,11 +46,11 @@ input[aria-invalid=true],select[aria-invalid=true]{border-color:#C2410C!importan
 <div style="margin-top: 36px; display: flex; flex-wrap: wrap; gap: 32px; align-items: flex-start">
 
 <!-- LEFT -->
-<div id="checkout-form" data-plan="{{cur.id}}" style="flex: 999 1 560px; min-width: 0; display: flex; flex-direction: column; gap: 20px">
+<div id="checkout-form" data-plan="{{cur.id}}" style="flex: 999 1 560px; min-width: 0; display: flex; flex-direction: column; gap: 28px; background: #FFFFFF; border: 1px solid #DCDFEA; border-radius: 28px; padding: 32px; box-sizing: border-box">
 
 <!-- 1. plan -->
-<div style="background: #FFFFFF; border: 1px solid #DCDFEA; border-radius: 24px; padding: 28px">
-<h2 style="margin: 0; font-size: 20px; font-weight: 800; display: flex; align-items: center; gap: 12px"><span style="width: 32px; height: 32px; border-radius: 10px; background: #0F1B3D; color: #FFB547; font-family: 'Sora', sans-serif; font-size: 15px; display: flex; align-items: center; justify-content: center">1</span>Choose your plan</h2>
+<div>
+<h2 style="margin: 0; font-size: 20px; font-weight: 800; display: flex; align-items: center; gap: 12px">Your plan</h2>
 <div role="group" aria-label="Plan" style="margin-top: 18px; display: grid; grid-template-columns: repeat(auto-fit, minmax(175px, 1fr)); gap: 10px">
 <sc-for list="{{plans}}" as="p" hint-placeholder-count="4">
 <sc-if value="{{p.selected}}" hint-placeholder-val="{{false}}">
@@ -74,8 +74,8 @@ input[aria-invalid=true],select[aria-invalid=true]{border-color:#C2410C!importan
 </div>
 
 <!-- 2. about you -->
-<div style="background: #FFFFFF; border: 1px solid #DCDFEA; border-radius: 24px; padding: 28px">
-<h2 style="margin: 0; font-size: 20px; font-weight: 800; display: flex; align-items: center; gap: 12px"><span style="width: 32px; height: 32px; border-radius: 10px; background: #0F1B3D; color: #FFB547; font-family: 'Sora', sans-serif; font-size: 15px; display: flex; align-items: center; justify-content: center">2</span>About you</h2>
+<div style="padding-top: 28px; border-top: 1px solid #E4E7F0">
+<h2 style="margin: 0; font-size: 20px; font-weight: 800; display: flex; align-items: center; gap: 12px">About you</h2>
 <div style="margin-top: 18px; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px">
 <div><label for="c-first" style="display: block; font-weight: 700; font-size: 14px; margin-bottom: 6px">First name *</label><input id="c-first" name="first_name" required type="text" autocomplete="given-name" style="width: 100%; box-sizing: border-box; font: inherit; font-size: 16px; padding: 12px 14px; min-height: 48px; border: 1.5px solid #C5CADB; border-radius: 12px; background: #FFFFFF; color: #0B1430"></div>
 <div><label for="c-last" style="display: block; font-weight: 700; font-size: 14px; margin-bottom: 6px">Last name *</label><input id="c-last" name="last_name" required type="text" autocomplete="family-name" style="width: 100%; box-sizing: border-box; font: inherit; font-size: 16px; padding: 12px 14px; min-height: 48px; border: 1.5px solid #C5CADB; border-radius: 12px; background: #FFFFFF; color: #0B1430"></div>
@@ -88,8 +88,8 @@ input[aria-invalid=true],select[aria-invalid=true]{border-color:#C2410C!importan
 </div>
 
 <!-- 3. area -->
-<div style="background: #FFFFFF; border: 1px solid #DCDFEA; border-radius: 24px; padding: 28px">
-<h2 style="margin: 0; font-size: 20px; font-weight: 800; display: flex; align-items: center; gap: 12px"><span style="width: 32px; height: 32px; border-radius: 10px; background: #0F1B3D; color: #FFB547; font-family: 'Sora', sans-serif; font-size: 15px; display: flex; align-items: center; justify-content: center">3</span>Where you work</h2>
+<div style="padding-top: 28px; border-top: 1px solid #E4E7F0">
+<h2 style="margin: 0; font-size: 20px; font-weight: 800; display: flex; align-items: center; gap: 12px">Where you work</h2>
 <p style="margin: 8px 0 0; font-size: 14px; color: #4A5470">Your plan includes {{zipsLabel}}. We'll confirm they're available before your territory goes live.</p>
 <div style="margin-top: 18px; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px">
 <div><label for="c-area1" style="display: block; font-weight: 700; font-size: 14px; margin-bottom: 6px">Primary area *</label><input id="c-area1" name="primary_area" required type="text" placeholder="City or zip code" style="width: 100%; box-sizing: border-box; font: inherit; font-size: 16px; padding: 12px 14px; min-height: 48px; border: 1.5px solid #C5CADB; border-radius: 12px; background: #FFFFFF; color: #0B1430"></div>
@@ -102,8 +102,8 @@ input[aria-invalid=true],select[aria-invalid=true]{border-color:#C2410C!importan
 </div>
 
 <!-- 4. payment (always open on this page) -->
-<div id="pay-step" style="background: #FFFFFF; border: 2px solid #2F4BB8; border-radius: 24px; padding: 28px">
-<h2 style="margin: 0; font-size: 20px; font-weight: 800; display: flex; align-items: center; gap: 12px"><span style="width: 32px; height: 32px; border-radius: 10px; background: #2F4BB8; color: #FFFFFF; font-family: 'Sora', sans-serif; font-size: 15px; display: flex; align-items: center; justify-content: center">4</span>Payment</h2>
+<div id="pay-step" style="padding-top: 28px; border-top: 1px solid #E4E7F0">
+<h2 style="margin: 0; font-size: 20px; font-weight: 800; display: flex; align-items: center; gap: 12px">Payment</h2>
 <p style="margin: 8px 0 0; font-size: 14px; line-height: 1.55; color: #4A5470">Enter your card and press <strong>Submit</strong> to start your {{cur.name}} plan. Have a coupon code? Add it below before you submit.</p>
 <label style="margin-top: 14px; display: flex; gap: 12px; align-items: flex-start; font-size: 14px; line-height: 1.55; color: #26304D"><input id="c-sms" name="sms_updates" type="checkbox" style="margin-top: 2px; flex-shrink: 0"><span>Text me about new referrals and appointments. Message and data rates may apply. Reply STOP to opt out. (Optional)</span></label>
 <div data-pay-frame="1" style="margin-top: 18px; border: 2px dashed #C5CADB; border-radius: 16px; padding: 48px 20px; text-align: center; color: #4A5470; background: #F8F9FC; font-weight: 600">The secure card form, coupon code field and Submit button load here.</div>
@@ -128,8 +128,8 @@ input[aria-invalid=true],select[aria-invalid=true]{border-color:#C2410C!importan
 </div>
 <p style="margin: 6px 0 0; font-size: 13px; color: #AEB7D3; text-align: right">{{cur.renews}}</p>
 
-<a href="#pay-step" style="margin-top: 20px; display: flex; align-items: center; justify-content: center; gap: 10px; text-decoration: none; font-weight: 800; font-size: 16px; padding: 15px; border-radius: 14px; background: #1B2A57; color: #FFFFFF"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="10" rx="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>Pay in step 4</a>
-<p style="margin: 12px 0 0; font-size: 13px; color: #AEB7D3; text-align: center; line-height: 1.5">Payment, coupon code and Submit are in step 4 on this page.</p>
+<a href="#pay-step" style="margin-top: 20px; display: flex; align-items: center; justify-content: center; gap: 10px; text-decoration: none; font-weight: 800; font-size: 16px; padding: 15px; border-radius: 14px; background: #1B2A57; color: #FFFFFF"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="10" rx="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>Go to payment</a>
+<p style="margin: 12px 0 0; font-size: 13px; color: #AEB7D3; text-align: center; line-height: 1.5">Payment, coupon code and Submit are at the bottom of the form.</p>
 
 <p style="margin: 18px 0 0; font-size: 14px; color: #C9D0E4; line-height: 1.55; text-align: center">Questions first? <a href="Contact.dc.html" style="color: #FFB547; font-weight: 700">Book a call</a> or email <a href="mailto:support@klientboost.us" style="color: #FFB547; font-weight: 700">support@klientboost.us</a></p>
 </aside>
@@ -155,7 +155,8 @@ class Component extends DCLogic {
     // the frame; move the whole window to the success screen instead.
     try {
       if (window.top !== window.self && /status=success/.test(q) && window.top.location.host === window.location.host) {
-        window.top.location.href = window.location.href;
+        if (window.top.KB && window.top.KB.onPaid) window.top.KB.onPaid(window.location.href);
+        else window.top.location.href = window.location.href;
         return;
       }
     } catch (e) {}

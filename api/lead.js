@@ -6,8 +6,9 @@
 const FIELDS = [
   'plan', 'first_name', 'last_name', 'email', 'phone', 'brokerage', 'license_number', 'mls_id',
   'primary_area', 'primary_radius', 'secondary_area', 'secondary_radius', 'zip_codes',
-  'account_manager', 'sms_updates'
+  'account_manager', 'sms_updates', 'payment_status'
 ];
+const PLAN_NAMES = { essential: 'Essential ($375/yr)', advanced: 'Advanced ($575/yr)', elite: 'Elite ($875/yr)', flex: 'Flex ($200/mo)' };
 
 function clean(v) {
   if (v === true) return 'yes';
@@ -26,6 +27,8 @@ module.exports = async function handler(req, res) {
   }
   const data = {};
   FIELDS.forEach((f) => { data[f] = clean(body[f]); });
+  data.plan = PLAN_NAMES[data.plan] || data.plan;
+  data.sms_updates = data.sms_updates === 'yes' ? 'Yes' : 'No';
   if (!data.email && !data.phone) return res.status(400).json({ error: 'Email or phone is required.' });
   if (data.email && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(data.email)) data.email = '';
 

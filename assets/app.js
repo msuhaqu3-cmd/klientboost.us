@@ -259,9 +259,10 @@
       if (!data.email && !data.phone) return null;
       return data;
     }
-    function send() {
+    function send(status) {
       var data = collect();
       if (!data) return;
+      data.payment_status = status || 'Started checkout';
       var body = JSON.stringify(data);
       if (body === last) return;
       last = body;
@@ -281,6 +282,24 @@
     document.addEventListener('visibilitychange', function () {
       if (document.visibilityState === 'hidden') send();
     });
+    // Submit in the payment form: on success the processor loads our
+    // /pricing?status=success page inside the frame. Send everything as Paid,
+    // then show the success screen in the main window.
+    window.KB.onPaid = function (href) {
+      send('Paid');
+      setTimeout(function () { window.location.href = href; }, 200);
+    };
+    var frame = document.querySelector('iframe.kb-pay');
+    if (frame) {
+      frame.addEventListener('load', function () {
+        var href = '';
+        try { href = frame.contentWindow.location.href; } catch (e) { return; }
+        if (/status=success/.test(href)) {
+          send('Paid');
+          setTimeout(function () { window.location.href = href; }, 150);
+        }
+      });
+    }
   };
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);
