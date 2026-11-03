@@ -282,7 +282,7 @@ Your market. Your leads. Your opportunity.
 <div style="background: #1B2A57; border-radius: 26px; padding: 34px; display: flex; flex-direction: column">
 <div style="display: flex; justify-content: space-between; align-items: center; gap: 12px">
 <h3 style="margin: 0; font-size: 22px; font-weight: 800">Elite</h3>
-<span style="font-size: 13px; font-weight: 800; border: 1px solid #6B7BB0; color: #FFFFFF; padding: 5px 12px; border-radius: 999px">Lowest fee</span>
+<span style="font-size: 13px; font-weight: 800; border: 1px solid #6B7BB0; color: #FFFFFF; padding: 5px 12px; border-radius: 999px">Account manager</span>
 </div>
 <p style="margin: 6px 0 0; color: #AEB7D3; font-size: 15px">Top volume with a dedicated manager.</p>
 <p style="margin: 26px 0 0; display: flex; align-items: baseline; gap: 6px"><span style="font-family: 'Sora', sans-serif; font-weight: 800; font-size: 54px; letter-spacing: -0.04em">$875</span><span style="color: #AEB7D3">/year</span></p>
@@ -307,11 +307,11 @@ Your market. Your leads. Your opportunity.
 <div style="background: #FFFFFF; color: #0B1430; border-radius: 26px; padding: 36px; display: flex; flex-direction: column; border: 3px solid #FFB547">
 <div style="display: flex; justify-content: space-between; align-items: center; gap: 12px">
 <h3 style="margin: 0; font-size: 22px; font-weight: 800">Flex</h3>
-<span style="font-size: 13px; font-weight: 800; background: #FFB547; color: #0B1430; padding: 6px 12px; border-radius: 999px">Pay monthly</span>
+<span style="font-size: 13px; font-weight: 800; background: #FFB547; color: #0B1430; padding: 6px 12px; border-radius: 999px">Lowest fee</span>
 </div>
 <p style="margin: 6px 0 0; color: #4A5470; font-size: 15px">Pay by the month, with referral replacement.</p>
 <p style="margin: 26px 0 0; display: flex; align-items: baseline; gap: 6px"><span style="font-family: 'Sora', sans-serif; font-weight: 800; font-size: 56px; letter-spacing: -0.04em">$200</span><span style="color: #4A5470">/month</span></p>
-<p style="margin: 4px 0 0; font-weight: 700; color: #2F4BB8">+ 10% referral fee at closing</p>
+<p style="margin: 4px 0 0; font-weight: 700; color: #2F4BB8">+ 5% referral fee at closing</p>
 <ul style="list-style: none; margin: 26px 0 0; padding: 26px 0 0; border-top: 1px solid #DCDFEA; display: flex; flex-direction: column; gap: 12px; font-size: 15px; flex-grow: 1">
 <li style="display: flex; gap: 10px"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2F4BB8" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink: 0; margin-top: 2px"><path d="M20 6L9 17l-5-5"></path></svg>3 to 4 exclusive referrals per month</li>
 <li style="display: flex; gap: 10px"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2F4BB8" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink: 0; margin-top: 2px"><path d="M20 6L9 17l-5-5"></path></svg>8 exclusive zip codes</li>
@@ -420,7 +420,7 @@ Your market. Your leads. Your opportunity.
 </details>
 <details style="background: #FFFFFF; border: 1px solid #DCDFEA; border-radius: 18px; padding: 0 24px">
 <summary style="padding: 22px 0; font-weight: 800; font-size: 18px; display: flex; justify-content: space-between; gap: 16px; align-items: center">When do I pay the referral fee?<span class="faq-plus" aria-hidden="true" style="font-size: 26px; font-weight: 500; transition: transform .2s">+</span></summary>
-<p style="margin: 0 0 22px; color: #4A5470; line-height: 1.65">Only at closing: 15% on Essential and Advanced, and 10% on Elite and Flex. If a referral doesn't close, there's no fee on it.</p>
+<p style="margin: 0 0 22px; color: #4A5470; line-height: 1.65">Only at closing: 15% on Essential and Advanced, 10% on Elite, and just 5% on Flex. If a referral doesn't close, there's no fee on it.</p>
 </details>
 <details style="background: #FFFFFF; border: 1px solid #DCDFEA; border-radius: 18px; padding: 0 24px">
 <summary style="padding: 22px 0; font-weight: 800; font-size: 18px; display: flex; justify-content: space-between; gap: 16px; align-items: center">Should I choose monthly or annual?<span class="faq-plus" aria-hidden="true" style="font-size: 26px; font-weight: 500; transition: transform .2s">+</span></summary>
@@ -509,7 +509,7 @@ class Component extends DCLogic {
       { id: 'essential', name: 'Essential', fee: 0.15, cost: 375, min: 3, max: 4 },
       { id: 'advanced', name: 'Advanced', fee: 0.15, cost: 575, min: 4, max: 5 },
       { id: 'elite', name: 'Elite', fee: 0.10, cost: 875, min: 6, max: 8 },
-      { id: 'flex', name: 'Flex (monthly)', fee: 0.10, cost: 2400, min: 3, max: 4 }
+      { id: 'flex', name: 'Flex (monthly)', fee: 0.05, cost: 2400, min: 3, max: 4 }
     ];
     var cur = PLANS.filter(function (p) { return p.id === s.plan; })[0];
     var money = function (n) { return '$' + Math.round(n).toLocaleString('en-US'); };
